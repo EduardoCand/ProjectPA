@@ -1,5 +1,6 @@
 import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.memberProperties
 
 fun main() {
 
@@ -17,7 +18,7 @@ fun main() {
 
     test.children = mutableListOf(
         JString("name", "Nome", test),
-        JNumber("age", 19, test),
+        JNumber("age", 20, test),
         JArray("arrayTest", arrayOf(
             JString("", "test1", null),
             objInArray,
@@ -32,9 +33,14 @@ fun main() {
                 ), null)), null)), test),
         testtest)
 
-    println(toJsonString(testtesttest))
-    var numero = countObj(testtesttest)
-    println(numero)
+    //println(toJsonString(testtesttest))
+    //var numero = countObj(testtesttest)
+
+    var listaStrs = getStrings(test)
+    listaStrs.forEach{
+        println(it.string)
+    }
+    //println(numero)
 }
 
 /**
@@ -63,6 +69,30 @@ fun countObj(obj: JObject): Int{
     }
 
     return count
+}
+
+fun getStrings(obj: JObject): MutableList<JString> {
+    val strList = mutableListOf<JString>()
+
+    fun aux(array: JArray, list: MutableList<JString>){
+        array.getJArray().forEach {
+            when(it){
+                is JString -> strList.add(it)
+                is JObject -> getStrings(it)
+                is JArray -> aux(it, list)
+            }
+        }
+    }
+
+    obj.children.forEach(){
+        when(it){
+            is JString -> strList.add(it)
+            is JArray -> aux(it, strList)
+            is JObject -> getStrings(it)
+        }
+    }
+
+    return strList
 }
 
 /*fun countObj(obj: JObject): Int{

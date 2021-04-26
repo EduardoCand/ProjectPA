@@ -10,6 +10,10 @@ class JArray(name:String, var array: Array<JValue>, parent: JObject?) : JValue(n
         return jvalue.substring(0, jvalue.length - 2)
     }
 
+    fun getJArray(): Array<JValue>{
+        return array
+    }
+
     override fun accept(v: Visitor) {
         TODO("Not yet implemented")
     }
