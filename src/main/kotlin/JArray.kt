@@ -14,9 +14,7 @@ class JArray(name:String, var array: Array<JValue>, parent: JObject?) : JValue(n
         return array
     }
 
-    override fun accept(v: Visitor) {
-        TODO("Not yet implemented")
-    }
+    override fun accept(v: Visitor): String = "\"${name}\": ${getArray()},"
 
     /**
      * varrer JArrays dentro de JArrays recursivamente

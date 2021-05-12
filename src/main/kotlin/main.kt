@@ -1,6 +1,5 @@
-import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.full.memberProperties
+import kotlin.reflect.KClass
 
 fun main() {
 
@@ -19,14 +18,14 @@ fun main() {
     test.children = mutableListOf(
         JString("name", "Nome", test),
         JNumber("age", 20, test),
-        JArray("arrayTest", arrayOf(
+        JArray("age", arrayOf(
             JString("", "test1", null),
             objInArray,
             JNumber("", 1, null),
             JArray("array2", arrayOf(
                 JString("", "test3", null),
                 JNumber("", 2, null)), null),
-            JArray("t", arrayOf(
+            JArray("age", arrayOf(
                 JString("", "test4", null),
                 JArray("", arrayOf(
                     JString("", "test5", null)
@@ -36,22 +35,20 @@ fun main() {
     //println(toJsonString(testtesttest))
     //var numero = countObj(testtesttest)
 
-    var listaStrs = getStrings(test)
+    /*var listaStrs = getStrings(test)
     listaStrs.forEach{
         println(it.string)
-    }
+    }*/
+
+    //var nomes = getPropertie("age", test)
+    //println(nomes)
     //println(numero)
+
+    val obj = Teste()
+    println(obj.age)
+    println(toJsonString(toJson(obj)))
 }
 
-/**
- * retorna a string em formato json
- */
-fun toJsonString(obj: JObject): String {
-    var v = JsonVisitor()
-    obj.accept(v)
-    // drop last ,
-    return "${v.json.dropLast(1)}\n}"
-}
 
 /*
 pega no objeto json e visita todos os childs
@@ -68,6 +65,37 @@ fun countObj(obj: JObject): Int{
         }
     }
 
+    return count
+}
+
+fun getPropertie(str: String, obj: JObject): Int{
+    var count = 0
+
+    fun aux(array: JArray){
+        array.getJArray().forEach {
+            if (it.name == str){
+                count++
+                if (it is JArray){
+                    aux(it)
+                }
+                if (it is JObject){
+                    getPropertie(str, it)
+                }
+            }
+        }
+    }
+
+    obj.children.forEach {
+        if(it.name == str){
+            count++
+            if (it is JArray){
+                aux(it)
+            }
+            if (it is JObject){
+                getPropertie(str, it)
+            }
+        }
+    }
     return count
 }
 
@@ -94,14 +122,3 @@ fun getStrings(obj: JObject): MutableList<JString> {
 
     return strList
 }
-
-/*fun countObj(obj: JObject): Int{
-    var count = 0
-    obj.children.forEach{
-        if(it is JObject) {
-            count++
-        }
-    }
-
-    return count
-}*/

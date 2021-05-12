@@ -1,40 +1,44 @@
 interface Visitor {
-    fun visit(obj: JObject)
-    fun visit(string: JString)
-    fun visit(num: JNumber)
-    fun visit(array: JArray)
-    fun visit(value: JValue)
+    fun visit(obj: JObject): String
+    fun visit(string: JString): String
+    fun visit(num: JNumber): String
+    fun visit(array: JArray): String
+    fun visit(value: JValue): String
 }
 
 class JsonVisitor : Visitor {
     var json = "{\n"
 
-    override fun visit(value: JValue) {
-        when(value) {
+    override fun visit(value: JValue): String {
+        return when(value) {
             is JString -> visit(value)
             is JNumber -> visit(value)
             is JArray -> visit(value)
             is JObject -> visit(value)
+            is JBoolean -> visit(value)
+            else -> ""
         }
     }
 
-    override fun visit(obj: JObject) {
+    override fun visit(obj: JObject): String {
         // abre parentesis curvos e mete nome do objeto
-        json += "\"${obj.name}\": {"
-        obj.accept(this)
-        json = json.dropLast(1)
-        json += "},"
+        //json += "\"${obj.name}\": {"
+        //aceitar este visitor
+        //vai ver os children
+        return obj.accept(this)
+        //json = json.dropLast(1)
+        //json += "},"
     }
 
-    override fun visit(string: JString) {
-        json += "\"${string.name}\": ${string.value},"
+    override fun visit(string: JString): String {
+        return string.accept(this)
     }
 
-    override fun visit(num: JNumber) {
-        json += "\"${num.name}\": ${num.value},"
+    override fun visit(num: JNumber): String {
+        return num.accept(this)
     }
 
-    override fun visit(array: JArray) {
-        json += "\"${array.name}\": ${array.getArray()},"
+    override fun visit(array: JArray): String {
+        return array.accept(this)
     }
 }

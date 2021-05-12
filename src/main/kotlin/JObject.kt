@@ -1,10 +1,12 @@
 class JObject(name: String,  var children : MutableList<JValue> = mutableListOf(), parent: JObject?): JValue(name, children, parent){
 
-    override fun accept(v: Visitor) {
+    override fun accept(v: Visitor): String {
+        var json = if(parent != null) "\"$name\": {" else "{"
         // visitar cada filho
         children.forEach {
-            v.visit(it)
+            json += v.visit(it)
         }
+        return json.dropLast(1) + "},"
     }
 
     /*fun getObject(strList: Array<JString>, valList: Array<JValue>): String {
