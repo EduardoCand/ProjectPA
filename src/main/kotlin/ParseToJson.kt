@@ -42,7 +42,7 @@ fun toJson(obj: Any, parent: JObject? = null, name: String = ""): JObject{
             }
         }
     }
-    result.children = array.toTypedArray().toMutableList()
+    result.children = array.toTypedArray()
     return result
 }
 
@@ -64,7 +64,7 @@ fun Any.toTypedJson(): JValue {
  */
 fun toJsonString(obj: JObject): String {
     var v = JsonVisitor()
-    obj.accept(v)
+    var x = obj.accept(v)
     // drop last ,
-    return "${v.json.dropLast(1)}\n}"
+    return "${x.dropLast(1)}\n}"
 }

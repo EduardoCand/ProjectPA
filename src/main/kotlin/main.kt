@@ -1,24 +1,21 @@
-import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.KClass
-
 fun main() {
 
     var test = JObject("test", parent = null)
     var testtest = JObject("testtest", parent = test)
     var testtesttest = JObject("testtesttest", parent = testtest)
 
-    testtesttest.children = mutableListOf(JString("nomestr1", "str1", testtesttest))
+    testtesttest.children = arrayOf(JString("nomestr1", "str1", testtesttest))
 
-    testtest.children = mutableListOf(JString("nomestr2", "str2", testtest), testtesttest)
+    testtest.children = arrayOf(JString("nomestr2", "str2", testtest), testtesttest)
 
-    var objInArray = JObject("", parent = null)
+    var objInArray = JObject("objInArray", parent = null)
 
-    objInArray.children = mutableListOf(JString("chave3", "valor3", objInArray))
+    objInArray.children = arrayOf(JString("chave3", "valor3", objInArray))
 
-    test.children = mutableListOf(
-        JString("name", "Nome", test),
-        JNumber("age", 20, test),
-        JArray("age", arrayOf(
+    test.children = arrayOf(
+        JString("age", "Nome", test),
+        JNumber("lol", 20, test),
+        JArray("array", arrayOf(
             JString("", "test1", null),
             objInArray,
             JNumber("", 1, null),
@@ -32,7 +29,7 @@ fun main() {
                 ), null)), null)), test),
         testtest)
 
-    //println(toJsonString(testtesttest))
+    //println(toJsonString(testtest))
     //var numero = countObj(testtesttest)
 
     /*var listaStrs = getStrings(test)
@@ -44,9 +41,12 @@ fun main() {
     //println(nomes)
     //println(numero)
 
-    val obj = Teste()
+    /*val obj = Teste()
     println(obj.age)
-    println(toJsonString(toJson(obj)))
+    println(toJsonString(toJson(obj)))*/
+
+    FileTreeSkeleton(test).open(test)
+
 }
 
 

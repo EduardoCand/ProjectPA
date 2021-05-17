@@ -4,9 +4,9 @@ class JArray(name:String, var array: Array<JValue>, parent: JObject?) : JValue(n
      * obtem a JString deste array
      */
     fun getArray(): String{
-        // recursively traverses this array
+        // varre o array recursivamente
         var jvalue = recurseArray(this)
-        // remove the last comma
+        // remove a ultima virgula
         return jvalue.substring(0, jvalue.length - 2)
     }
 
@@ -20,7 +20,7 @@ class JArray(name:String, var array: Array<JValue>, parent: JObject?) : JValue(n
      * varrer JArrays dentro de JArrays recursivamente
      */
     fun recurseArray(array: JArray): String {
-        // Abre o parentesis
+        // Abre o parentesis reto
         var string = "["
         array.array.forEach {
             var visitor = JsonVisitor()
@@ -29,7 +29,7 @@ class JArray(name:String, var array: Array<JValue>, parent: JObject?) : JValue(n
                 is JArray -> recurseArray(it)
                 is JObject -> {
                     visitor.visit(it)
-                    // drop the first {
+                    // tira a primeira {
                     visitor.json.drop(1)
                 }
                 else -> "${it.value}, "
