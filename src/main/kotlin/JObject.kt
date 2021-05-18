@@ -6,7 +6,6 @@ class JObject(name: String,  var children: Array<JValue> = arrayOf(), parent: JO
         children.forEach {
             json += v.visit(it)
         }
-
         v.endVisit(this)
         return json.dropLast(1) + "},"
     }
