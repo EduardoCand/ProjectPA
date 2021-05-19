@@ -1,9 +1,9 @@
 import org.eclipse.swt.SWT
-import org.eclipse.swt.events.ModifyEvent
-import org.eclipse.swt.events.ModifyListener
+import org.eclipse.swt.custom.SashForm
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.graphics.Color
+import org.eclipse.swt.layout.FillLayout
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.*
 
@@ -15,17 +15,19 @@ class FileTreeSkeleton(obj: JObject) {
     init {
         shell.setSize(250, 200)
         shell.text = obj.name
-        shell.layout = GridLayout(1, false)
+        shell.layout = FillLayout()
 
-        tree = Tree(shell, SWT.SINGLE or SWT.BORDER)
+        var sashForm = SashForm(shell, SWT.SINGLE or SWT.HORIZONTAL)
+
+        tree = Tree(sashForm, SWT.SINGLE or SWT.HORIZONTAL)
+        val objectText = Text(sashForm, SWT.HORIZONTAL)
 
         tree.addSelectionListener(object : SelectionAdapter() {
             override fun widgetSelected(e: SelectionEvent) {
-                println("selected: " + tree.selection.first().data)
+                objectText.text = tree.selection.first().data.toString()
             }
         })
     }
-
     fun open(root: JObject) {
 
         var temp = TreeItem(tree, SWT.NONE)
@@ -47,7 +49,7 @@ class FileTreeSkeleton(obj: JObject) {
                 item.text = "(object)"
                 item.data = obj.name
                 temp = item
-                // under object, will have "name" and "children"
+                // objeto abaixo, vai ter "name" e "children"
                 name = TreeItem(item, SWT.NONE)
                 name.text = "name: \"${obj.name}\""
                 name.data = toJsonString(obj)
@@ -95,15 +97,15 @@ class FileTreeSkeleton(obj: JObject) {
             }
         })
 
-        //search
-        val textComposite = Composite(shell, SWT.NONE)
+        //search duvidas??
+        val textComposite = Composite(shell, SWT.VERTICAL)
         textComposite.layout = GridLayout()
-        var searchText = Text(textComposite, SWT.SINGLE or SWT.BORDER)
+        var searchText = Text(textComposite, SWT.SINGLE or SWT.BORDER or SWT.VERTICAL)
         var color = Color(0, 100, 255, 70)
         var color2 = Color(255, 255, 255, 70)
 
         searchText.addModifyListener {
-            val item = tree.selection //duvida
+            val item = tree.selection
             item.forEach {
                 it.items.forEach {
                     if (searchText.text == "") {
@@ -138,5 +140,4 @@ fun Tree.traverse(visitor: (TreeItem) -> Unit) {
         }
     }
     items.forEach { it.traverse() }
-
 }

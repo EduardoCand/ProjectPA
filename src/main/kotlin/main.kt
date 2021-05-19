@@ -47,6 +47,9 @@ fun main() {
 
     FileTreeSkeleton(test).open(test)
 
+    //val w = Injector.create(Window::class)
+    //w.open(test)
+
 }
 
 
