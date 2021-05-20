@@ -38,7 +38,7 @@ class Injector {
                     it.isAccessible = true
                     val key = type.simpleName + "." + it.name
                     val obj = map[key]!!.first().createInstance()
-                    (it as KMutableProperty<*>).setter.call(o, obj) //??
+                    (it as KMutableProperty<*>).setter.call(o, obj)
                 }
                 if (it.hasAnnotation<InjectAdd>()){
                     it.isAccessible = true

@@ -1,15 +1,10 @@
-import java.awt.Dimension
-import java.awt.FlowLayout
-import java.awt.LayoutManager
-import java.awt.Point
-import java.util.*
-import javax.swing.*
-import javax.swing.tree.DefaultMutableTreeNode
-
-
+import org.eclipse.swt.layout.FillLayout
+import org.eclipse.swt.widgets.Display
+import org.eclipse.swt.widgets.Shell
+import org.eclipse.swt.widgets.Tree
+/*
 interface FrameSetup {
     val title: String
-    val layoutManager: LayoutManager
     val fileTree: FileTreeSkeleton
 }
 
@@ -17,61 +12,46 @@ interface Action {
     val name: String
     fun execute(window: Window)
     fun undo(window: Window)
-}
+}*/
 
 class Window {
-    private val frame = JFrame()
-    private val controlPanel = JPanel()
+    //private val frame = JFrame()
+    //private val controlPanel = JPanel()
 
-    // 1) eliminar dependencia de DefaultSetup
+    private val shell: Shell = Shell(Display.getDefault())
+    //val tree: Tree
+
     @Inject
     private lateinit var setup: FrameSetup
 
-    // 2) eliminar dependencias das acoes concretas (Center, Size)
     @InjectAdd
     private val actions = mutableListOf<Action>()
 
-    private val stack = Stack<Action>()
+    //private val stack = Stack<Action>()
 
     init {
-        frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        frame.size = Dimension(300, 200)
+        //frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+        shell.text = setup.title
+        shell.layout = FillLayout()
+        shell.setSize(250, 200)
     }
 
-    val location get() = frame.location
-    val dimension get() = frame.size
+    //val location get() = frame.location
+    //val dimension get() = frame.size
 
     fun open(obj: JObject) {
-        frame.title = setup.title
-        frame.layout = setup.layoutManager
 
-        fun jsonToTree(obj: JObject): DefaultMutableTreeNode{
-            var node = DefaultMutableTreeNode(obj.name)
-            var leaf: DefaultMutableTreeNode
-            if (obj.parent == null){
-                node = DefaultMutableTreeNode(obj.name)
-            }else{
-                leaf = DefaultMutableTreeNode(obj.name)
-                node.add(leaf)
-            }
-            return node
+        if (setup.title == "Phase 3"){
+            setup.fileTree.open(obj)
+        }else if (setup.title == "Phase 4"){
+            setup.fileTree.open(obj)
         }
 
-        val teste = jsonToTree(obj)
-        /*val department = DefaultMutableTreeNode("Department")
-        val salesDepartment = DefaultMutableTreeNode("Sales")
-        val employee1 = DefaultMutableTreeNode("Robert")
-        salesDepartment.add(employee1);
-        department.add(salesDepartment);
-        */
 
-        val tree = JTree(teste)
-        val treeView = JScrollPane(tree)
-
-        controlPanel.layout = FlowLayout()
-        controlPanel.add(treeView)
-        frame.add(controlPanel);
-
+        //controlPanel.layout = FlowLayout()
+        //controlPanel.add(treeView)
+        //frame.add(controlPanel);
+/*
         actions.forEach { action ->
             val button = JButton(action.name)
             button.addActionListener {
@@ -85,9 +65,9 @@ class Window {
             }
             frame.add(button)
         }
-        frame.isVisible = true
+        frame.isVisible = true*/
     }
-
+/*
     fun move(x: Int, y: Int) {
         frame.location = Point(x, y)
     }
@@ -96,6 +76,6 @@ class Window {
         require(width > 0)
         require(height > 0)
         frame.size = Dimension(width, height)
-    }
+    }*/
 
 }
