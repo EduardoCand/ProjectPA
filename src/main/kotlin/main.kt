@@ -45,7 +45,7 @@ fun main() {
     println(obj.age)
     println(toJsonString(toJson(obj)))*/
 
-    //var file = FileTreeSkeleton(test)
+    //var file = FileTreeSkeleton(test).open(test)
 
     val w = Injector.create(FileTreeSkeleton::class)
     w.open(test)

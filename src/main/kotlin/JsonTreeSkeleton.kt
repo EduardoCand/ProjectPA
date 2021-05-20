@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.FillLayout
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.*
 
+
 interface FrameSetup {
     val title: String
     val fileTree: FileTreeSkeleton
@@ -16,8 +17,8 @@ interface FrameSetup {
 
 interface Action {
     val name: String
-    fun execute(window: Window)
-    fun undo(window: Window)
+    fun execute()
+    fun undo()
 }
 
 class FileTreeSkeleton() {
@@ -49,9 +50,9 @@ class FileTreeSkeleton() {
         })
     }
     fun open(root: JObject) {
+
         shell.text = setup.title
-        val imageFolder = Image(Display.getDefault(),"C:/Users/Eduardo/IdeaProjects/projetoPA/src/main/resources/folder.gif")
-        val imageFile = Image(Display.getDefault(),"C:/Users/Eduardo/IdeaProjects/projetoPA/src/main/resources/file.gif")
+
 
         var temp = TreeItem(tree, SWT.NONE)
         temp.text = "(object)"
@@ -77,47 +78,54 @@ class FileTreeSkeleton() {
                 name.text = "name: \"${obj.name}\""
                 name.data = toJsonString(obj)
 
+
                 children = TreeItem(item, SWT.NONE)
                 children.text = "children"
                 children.data = "children"
+
+
                 obj.accept(this)
 
                 return ""
             }
 
-            override fun visit(string: JString): String {
-                return ""
-            }
-
-            override fun visit(num: JNumber): String {
-                return ""
-            }
-
-            override fun visit(array: JArray): String {
-                return ""
-            }
-
-            override fun visit(boolean: JBoolean): String {
-                return ""
-            }
-
-            override fun visit(value: JValue): String {
-                when(value){
-                    is JObject -> visit(value)
-                    is JArray -> visit(value)
-                    is JString -> visit(value)
-                    is JNumber -> visit(value)
-                    is JBoolean -> visit(value)
+                override fun visit(string: JString): String {
+                    return ""
                 }
-                return ""
-            }
 
-            override fun endVisit(obj: JObject){
-                if (temp.parentItem != null){
-                    temp = temp.parentItem
+                override fun visit(num: JNumber): String {
+                    return ""
                 }
-            }
-        })
+
+                override fun visit(array: JArray): String {
+                    return ""
+                }
+
+                override fun visit(boolean: JBoolean): String {
+                    return ""
+                }
+
+                override fun visit(value: JValue): String {
+                    when(value){
+                        is JObject -> visit(value)
+                        is JArray -> visit(value)
+                        is JString -> visit(value)
+                        is JNumber -> visit(value)
+                        is JBoolean -> visit(value)
+                    }
+                    return ""
+                }
+
+                override fun endVisit(obj: JObject){
+                    if (temp.parentItem != null){
+                        temp = temp.parentItem
+                    }
+                }
+            })
+
+        val imageFolder = Image(Display.getDefault(),"E:/Mestrado/PA//ProjectPA/src/main/resources/folder.gif")
+        val imageFile = Image(Display.getDefault(),"E:/Mestrado/PA//ProjectPA/src/main/resources/file.gif")
+
         //procurar pelo nome
         val textComposite = Composite(shell, SWT.VERTICAL)
         textComposite.layout = GridLayout()
@@ -136,6 +144,7 @@ class FileTreeSkeleton() {
                 }
             }
         }
+
         if (setup.title == "Phase 4"){
             //colocar icons
             tree.traverse{
