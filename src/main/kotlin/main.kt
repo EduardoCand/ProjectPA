@@ -47,7 +47,7 @@ fun main() {
 
     //var file = FileTreeSkeleton(test).open(test)
 
-    val w = Injector.create(FileTreeSkeleton::class)
+    val w = Injector.create(FileTree::class)
     w.open(test)
 
 }

@@ -1,22 +1,43 @@
-class Phase3 : FrameSetup {
-    override val title: String
-        get() = "Phase 3"
-    override val fileTree: FileTreeSkeleton
-        get() = fileTree
-    fun open(obj: JObject){
-        fileTree.open(obj)
-    }
+import org.eclipse.swt.graphics.Image
+import org.eclipse.swt.widgets.Display
 
+class FolderTree : FrameSetup {
+    override val title: String
+        get() = "FolderTree"
+    fun open(skeleton: FileTree){
+    }
 }
 
-class Phase4 : FrameSetup {
+class IconFolderTree : FrameSetup {
     override val title: String
-        get() = "Phase 4"
-    override val fileTree: FileTreeSkeleton
-        get() = fileTree
-    fun open(obj: JObject){
-        fileTree.open(obj)
+        get() = "IconFolderTree"
+
+    val imageFolder = Image(Display.getDefault(),"E:/Mestrado/PA//ProjectPA/src/main/resources/folder.gif")
+    val imageFile = Image(Display.getDefault(),"E:/Mestrado/PA//ProjectPA/src/main/resources/file.gif")
+
+    fun addIcons(skeleton: FileTree){
+        skeleton.tree.traverse{
+            if (it.text == "(object)"){
+                it.image = imageFolder
+            } else if (it.text.contains("name:")){
+                it.image = imageFile
+            }
+        }
     }
+
+
+    /*
+        if (setup.title == "Phase 4"){
+            //colocar icons
+            tree.traverse{
+                if (it.text == "(object)"){
+                    it.image = imageFolder
+                } else if (it.text.contains("name:")){
+                    it.image = imageFile
+                }
+            }
+        }*/
+
 }
 
 class Move : Action {

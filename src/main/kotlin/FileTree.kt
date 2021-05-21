@@ -2,9 +2,7 @@ import org.eclipse.swt.SWT
 import org.eclipse.swt.custom.SashForm
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
-import org.eclipse.swt.events.TreeListener
 import org.eclipse.swt.graphics.Color
-import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.layout.FillLayout
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.*
@@ -12,7 +10,6 @@ import org.eclipse.swt.widgets.*
 
 interface FrameSetup {
     val title: String
-    val fileTree: FileTreeSkeleton
 }
 
 interface Action {
@@ -21,7 +18,7 @@ interface Action {
     fun undo()
 }
 
-class FileTreeSkeleton() {
+class FileTree() {
     private val shell: Shell = Shell(Display.getDefault())
     val tree: Tree
 
@@ -50,9 +47,6 @@ class FileTreeSkeleton() {
         })
     }
     fun open(root: JObject) {
-
-        shell.text = setup.title
-
 
         var temp = TreeItem(tree, SWT.NONE)
         temp.text = "(object)"
@@ -123,9 +117,6 @@ class FileTreeSkeleton() {
                 }
             })
 
-        val imageFolder = Image(Display.getDefault(),"E:/Mestrado/PA//ProjectPA/src/main/resources/folder.gif")
-        val imageFile = Image(Display.getDefault(),"E:/Mestrado/PA//ProjectPA/src/main/resources/file.gif")
-
         //procurar pelo nome
         val textComposite = Composite(shell, SWT.VERTICAL)
         textComposite.layout = GridLayout()
@@ -141,17 +132,6 @@ class FileTreeSkeleton() {
                     it.background = color
                 } else if (!it.text.contains(searchText.text)){
                     it.background = color2
-                }
-            }
-        }
-
-        if (setup.title == "Phase 4"){
-            //colocar icons
-            tree.traverse{
-                if (it.text == "(object)"){
-                    it.image = imageFolder
-                } else if (it.text.contains("name:")){
-                    it.image = imageFile
                 }
             }
         }
