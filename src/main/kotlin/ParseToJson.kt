@@ -28,7 +28,7 @@ fun toJson(obj: Any, parent: JObject? = null, name: String = ""): JObject{
         }
     } else {
         array = obj.javaClass.kotlin.declaredMemberProperties.map {
-            var value = it.get(obj)!!//??
+            var value = it.get(obj)!!
             when(value) {
                 is String -> JString(it.name, value, result)
                 is Number -> JNumber(it.name, value, result)
