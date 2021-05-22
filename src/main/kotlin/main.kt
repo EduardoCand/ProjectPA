@@ -49,7 +49,11 @@ fun main() {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     val w = Injector.create(FileTree::class)
+=======
+    val w = Injector.create(JsonTreeSkeleton::class)
+>>>>>>> Stashed changes
 =======
     val w = Injector.create(JsonTreeSkeleton::class)
 >>>>>>> Stashed changes
