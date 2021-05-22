@@ -5,7 +5,7 @@ import kotlin.reflect.full.declaredMemberProperties
  */
 fun toJson(obj: Any, parent: JObject? = null, name: String = ""): JObject{
     var result = JObject(name, parent = parent)
-    lateinit var array: List<JValue> //??
+    lateinit var array: List<JValue>
     // jsonify map
     if(obj is Map<*, *>) {
         // parse pairs
