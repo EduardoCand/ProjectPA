@@ -4,7 +4,10 @@ import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.graphics.Color
 <<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
+<<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
 import org.eclipse.swt.layout.FillLayout
+=======
+>>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
 =======
 >>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
 import org.eclipse.swt.layout.GridLayout
@@ -16,6 +19,11 @@ import java.io.IOException
 interface FrameSetup {
     val title: String
 <<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
+<<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
+=======
+    val fileTree: JsonTreeSkeleton
+    fun apply(skeleton: JsonTreeSkeleton, root: JObject, shell: Shell)
+>>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
 =======
     val fileTree: JsonTreeSkeleton
     fun apply(skeleton: JsonTreeSkeleton, root: JObject, shell: Shell)
@@ -28,7 +36,11 @@ interface Action {
 }
 
 <<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
+<<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
 class FileTree() {
+=======
+class JsonTreeSkeleton() {
+>>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
 =======
 class JsonTreeSkeleton() {
 >>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
@@ -60,6 +72,7 @@ class JsonTreeSkeleton() {
         })
     }
     fun open(root: JObject) {
+<<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
 <<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
 
         var temp = TreeItem(tree, SWT.NONE)
@@ -129,6 +142,8 @@ class JsonTreeSkeleton() {
                         temp = temp.parentItem
                     }
 =======
+=======
+>>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
         shell.text = setup.title
 
         actions.forEach {
@@ -137,16 +152,22 @@ class JsonTreeSkeleton() {
             button.addSelectionListener(object: SelectionAdapter(){
                 override fun widgetSelected(e: SelectionEvent) {
                     it.execute(this@JsonTreeSkeleton, tree.selection.first())
+<<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
+>>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
+=======
 >>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
                 }
             })
         }
 
 <<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
+<<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
         //procurar pelo nome
         val textComposite = Composite(shell, SWT.VERTICAL)
         textComposite.layout = GridLayout()
 =======
+=======
+>>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
         if(::setup.isInitialized){
             setup.apply(this, root, shell)
         } else {
@@ -157,6 +178,9 @@ class JsonTreeSkeleton() {
         //search for name
         val textComposite = Composite(shell, SWT.NONE)
         textComposite.layout = RowLayout()
+<<<<<<< Updated upstream:src/main/kotlin/FileTree.kt
+>>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
+=======
 >>>>>>> Stashed changes:src/main/kotlin/JsonTreeSkeleton.kt
         var searchText = Text(textComposite, SWT.SINGLE or SWT.BORDER or SWT.VERTICAL)
         var color = Color(0, 100, 255, 70)
