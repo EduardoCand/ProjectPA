@@ -72,7 +72,7 @@ fun countObj(obj: JObject): Int{
     return count
 }
 
-fun getPropertie(str: String, obj: JObject): Int{
+fun getName(str: String, obj: JObject): Int{
     var count = 0
 
     fun aux(array: JArray){
@@ -83,7 +83,7 @@ fun getPropertie(str: String, obj: JObject): Int{
                     aux(it)
                 }
                 if (it is JObject){
-                    getPropertie(str, it)
+                    getName(str, it)
                 }
             }
         }
@@ -96,7 +96,7 @@ fun getPropertie(str: String, obj: JObject): Int{
                 aux(it)
             }
             if (it is JObject){
-                getPropertie(str, it)
+                getName(str, it)
             }
         }
     }
