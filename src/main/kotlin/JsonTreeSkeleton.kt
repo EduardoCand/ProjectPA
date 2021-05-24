@@ -127,7 +127,7 @@ class JsonTreeSkeleton() {
         shell.layout = GridLayout(1, false)
 
         var sashForm = SashForm(shell, SWT.SINGLE or SWT.HORIZONTAL)
-        val objectText = Text(sashForm, SWT.HORIZONTAL)
+        val objectText = Text(sashForm, SWT.NONE)
 
         objectText.text = treeItem.data.toString()
 
@@ -155,15 +155,10 @@ class JsonTreeSkeleton() {
         var newNameText = Text(textComposite, SWT.SINGLE or SWT.BORDER or SWT.VERTICAL)
 
         newNameText.addModifyListener{
-            treeItem.text = newNameText.text.toString()
-            val display = Display.getDefault()
 
             changeButton.addSelectionListener(object: SelectionAdapter(){
                 override fun widgetSelected(e: SelectionEvent) {
-                    while (!display.isDisposed) {
-                        if (!display.readAndDispatch()) display.sleep()
-                    }
-                    display.dispose()
+                    treeItem.text = newNameText.text.toString()
                 }
             })
         }
